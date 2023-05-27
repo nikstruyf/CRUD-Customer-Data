@@ -1,0 +1,33 @@
+.topnav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: var(--topnav-hieght);
+    box-shadow: var(--box-shadow-bot);
+}
+
+.topnav-link {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: large;
+    font-weight: 600;
+}
+
+.topnav-link:hover {
+    text-decoration: underline;
+}
+
+.topnav-user {
+    display: flex;
+    column-gap: 5px;
+}
+
+.topnav-link-logout {
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.topnav-link-logout:hover {
+    text-decoration: underline;
+}

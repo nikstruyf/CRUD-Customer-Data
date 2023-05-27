@@ -1,0 +1,41 @@
+.login.page-bg {
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.login.page-container {
+    padding: 20px;
+}
+
+.login.page-container > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.login-label {
+    text-transform: capitalize;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.login-label > span {
+    margin-left: 5px;
+}
+
+.login-button {
+    padding: 5px 30px;
+    font-size: 16px;
+    border: 2px solid var(--main-color-green);
+    border-radius: 5px;
+    color: white;
+    background-color: var(--main-color-green);
+    cursor: pointer;
+}
+
+.login-button:active {
+    transform: translateY(1px);
+}
