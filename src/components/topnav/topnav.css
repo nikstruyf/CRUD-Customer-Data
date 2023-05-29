@@ -23,11 +23,15 @@
     column-gap: 5px;
 }
 
-.topnav-link-logout {
+.button-logout {
     text-decoration: none;
     font-weight: 600;
+    border: none;
+    background-color: inherit;
+    color: var(--main-color-red);
+    cursor: pointer;
 }
 
-.topnav-link-logout:hover {
+.button-logout:hover {
     text-decoration: underline;
 }

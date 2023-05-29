@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import './loginpage.css';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { doLogin } from "../../reducers/username";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [username, setUsername] = useState<string>('')
 
   const login = (e: any) => {
     e.preventDefault();
+    dispatch(doLogin(username || ''));
     navigate('/customer');
   }
 
@@ -20,6 +26,7 @@ export default function LoginPage() {
               className="inputbox"
               type="text"
               placeholder="enter username"
+              onChange={(e) => { setUsername(e.target.value); }}
             />
           </div>
           <input

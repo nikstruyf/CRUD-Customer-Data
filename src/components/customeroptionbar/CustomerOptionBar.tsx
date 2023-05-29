@@ -32,7 +32,7 @@ export default function CustomerOptionBar() {
         <button
           type="button"
           className="button-add"
-          onClick={() => { navigate('/customer/manage?event=add'); }}
+          onClick={() => { navigate('/customer/manage?form-type=add'); }}
         >
           add
         </button>

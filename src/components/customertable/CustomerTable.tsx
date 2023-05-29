@@ -24,44 +24,52 @@ export default function CustomerTable() {
         table option
       </div>
       <table>
-        <tr>
-          <th>
-            status
-          </th>
-          <th>
-            code
-          </th>
-          <th>
-            name
-          </th>
-          <th>
-            email
-          </th>
-          <th>
-            telephone number
-          </th>
-        </tr>
-        {
-          data.map((data) => (
-            <tr>
-              <td>
-                {data.status}
-              </td>
-              <td>
-                {data.code}
-              </td>
-              <td>
-                {data.name}
-              </td>
-              <td>
-                {data.email}
-              </td>
-              <td>
-                {data.tel}
-              </td>
-            </tr>
-          ))
-        }
+        <thead>
+          <tr>
+            <th />
+            <th>
+              status
+            </th>
+            <th>
+              code
+            </th>
+            <th>
+              name
+            </th>
+            <th>
+              email
+            </th>
+            <th>
+              telephone number
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            data.map((data, index) => (
+              <tr key={index}>
+                <td>
+                  <input type="checkbox" />
+                </td>
+                <td>
+                  {data.status}
+                </td>
+                <td>
+                  {data.code}
+                </td>
+                <td>
+                  {data.name}
+                </td>
+                <td>
+                  {data.email}
+                </td>
+                <td>
+                  {data.tel}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
       </table>
       <div>
         table page
