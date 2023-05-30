@@ -3,7 +3,7 @@ import './customerform.css';
 import { useNavigate, useSearchParams  } from 'react-router-dom';
 import { CustomerData } from "../../interface";
 import { useSelector, useDispatch } from "react-redux";
-import { customerArrayData, insertCustomer, updateCustomer } from "../../reducers/customer";
+import { customerArrayData, insertCustomer, updateCustomer, deleteCustomer } from "../../reducers/customer";
 
 export default function CustomerForm() {
   const navigate = useNavigate();
@@ -16,6 +16,9 @@ export default function CustomerForm() {
 
   const data = useSelector(customerArrayData);
   let index = -1;
+  if (searchParams.get('form-type') === 'update') {
+    index = data.findIndex((data: CustomerData) => data.id === searchParams.get('id'));
+  }
 
   const insert = (e: any) => {
     e.preventDefault();
@@ -36,6 +39,7 @@ export default function CustomerForm() {
 
   const update = (e: any) => {
     e.preventDefault();
+    console.log(index);
     dispatch(updateCustomer({
       data: {
       id: code+tel.slice(-4),
@@ -54,9 +58,18 @@ export default function CustomerForm() {
     navigate('/customer');
   }
 
+  const deleteCus = (e: any) => {
+    e.preventDefault();
+    dispatch(deleteCustomer(index));
+    setCode('');
+    setName('');
+    setEmail('');
+    setTel('');
+    navigate('/customer');
+  }
+
   useEffect(() => {
     if (searchParams.get('form-type') === 'update') {
-      index = data.findIndex((data: CustomerData) => data.id === searchParams.get('id'));
       setCode(data[index].code);
       setName(data[index].name);
       setEmail(data[index].email);
@@ -65,7 +78,10 @@ export default function CustomerForm() {
   }, [])
 
   return (
-    <form onSubmit={searchParams.get('form-type') === 'update' ? update : insert}>
+    <form
+      onSubmit={searchParams.get('form-type') === 'update' ? update : insert}
+      onReset={deleteCus}
+    >
       <div className="form-header">
         insert customer information
       </div>
@@ -109,9 +125,17 @@ export default function CustomerForm() {
         <span />
         <input
           type="submit"
-          value="insert"
+          value={searchParams.get('form-type') === 'update' ? "update" : "insert"}
           className="submit-button"
         />
+        { searchParams.get('form-type') === 'update' &&
+          <input
+            type="reset"
+            className="delete-button"
+            value="delete"
+          />
+        }
+        
       </div>
     </form>
   )

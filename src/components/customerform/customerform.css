@@ -51,3 +51,24 @@
 .submit-button:active {
     transform: translateY(1px);
 }
+
+.delete-button {
+    border: 2px solid var(--main-color-red);
+    border-radius: 5px;
+    padding: 5px 20px;
+    font-size: 16px;
+    text-transform: capitalize;
+    background-color: inherit;
+    color: var(--main-color-red);
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.delete-button:hover {
+    background-color: var(--main-color-red);
+    color: white;
+}
+
+.delete-button:active {
+    transform: translateY(1px);
+}
