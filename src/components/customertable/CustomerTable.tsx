@@ -6,6 +6,7 @@ import { CustomerData } from "../../interface";
 import { useNavigate } from "react-router-dom";
 import { multipleUpdateCustomer, multipleDeleteCustomer } from "../../reducers/customer";
 import { Pagination } from "@mui/material";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 export default function CustomerTable() {
   const data = useSelector(customerArrayData);
@@ -105,14 +106,20 @@ export default function CustomerTable() {
           <button
             type="button"
             className="button-set-status"
-            onClick={() => { ActionChangeStatus('active'); }}
+            onClick={() => {
+              ActionChangeStatus('active');
+              setSelectedIndex([]);
+            }}
           >
             active
           </button>
           <button
             type="button"
             className="button-set-status"
-            onClick={() => { ActionChangeStatus('inactive'); }}
+            onClick={() => {
+              ActionChangeStatus('inactive');
+              setSelectedIndex([]);
+            }}
           >
             inactive
           </button>
@@ -122,30 +129,31 @@ export default function CustomerTable() {
             className="button-delete"
             onClick={() => { ActionDelete(); }}
           >
+            {/* <DeleteOutlineIcon sx={{ fontSize: 20 }} /> */}
             delete
           </button>
         </div>
       </div>
-      <table>
+      <table className="customer-table">
         <thead>
           <tr>
-            <th />
-            <th>
+            <th className="head-select" />
+            <th className="head-status">
               status
             </th>
-            <th>
+            <th className="head-code">
               code
             </th>
-            <th>
+            <th className="head-name">
               name
             </th>
-            <th>
+            <th className="head-email">
               email
             </th>
-            <th>
+            <th className="head-tel">
               telephone number
             </th>
-            <th />
+            <th className="head-edit" />
           </tr>
         </thead>
         <tbody>
@@ -157,8 +165,11 @@ export default function CustomerTable() {
               : el.status === filterStatus
             )
             .map((data: CustomerData, index: number) => (
-              <tr key={data.id}>
-                <td>
+              <tr
+                className={`row ${index%2 === 0 ? 'even' : 'odd'}`}
+                key={data.id}
+              >
+                <td className="body-select">
                   <input
                     type="checkbox"
                     checked={selectedIndex.includes(index)}
@@ -180,22 +191,22 @@ export default function CustomerTable() {
                     }}
                   />
                 </td>
-                <td>
-                  {data.status}
+                <td className={`body-status ${data.status}`}>
+                  <span>{data.status}</span>
                 </td>
-                <td>
+                <td className="body-code">
                   {data.code}
                 </td>
-                <td>
+                <td className="body-name">
                   {data.name}
                 </td>
-                <td>
+                <td className="body-email">
                   {data.email}
                 </td>
-                <td>
+                <td className="body-tel">
                   {data.tel}
                 </td>
-                <td>
+                <td className="body-edit">
                   <button
                     type="button"
                     onClick={() => { navigate(`/customer/manage?form-type=update&id=${data.id}`); }}

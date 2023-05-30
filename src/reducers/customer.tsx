@@ -47,7 +47,7 @@ const sampleData = [{
   email: 'nikkunraho@gmail.com',
   tel: '0933912725',
   status: 'inactive'
-}]
+},]
 
 export const customerSlice = createSlice({
   name: 'customer',

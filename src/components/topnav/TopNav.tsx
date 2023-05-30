@@ -4,6 +4,8 @@ import './topnav.css';
 import { useSelector, useDispatch } from "react-redux";
 import { doLogout, usernameDisplay } from "../../reducers/username";
 
+import LogoutIcon from '@mui/icons-material/Logout';
+
 export default function TopNav() {
   const username = useSelector(usernameDisplay);
   const dispatch = useDispatch();
@@ -18,12 +20,12 @@ export default function TopNav() {
     <div className="topnav">
       <Link className="topnav-link" to="/customer">customer</Link>
       <div className="topnav-user">
-        <span>{username}</span>
+        <span className="username">{username}</span>
         <button
           className="button-logout"
           onClick={() => { logout(); }}
         >
-          logout
+          <LogoutIcon />
         </button>
       </div>
     </div>

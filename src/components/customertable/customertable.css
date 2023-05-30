@@ -25,7 +25,7 @@
 
 .filter-code {
     display: flex;
-    height: 22px;
+    height: 25px;
     font-size: 15px;
     font-weight: 400;
     outline: none;
@@ -110,11 +110,6 @@
     padding: 3px 7px;
 }
 
-.button-set-status:hover {
-    background-color: var(--second-color-blue);
-    border-color: var(--second-color-blue);
-}
-
 .button-delete {
     border: 2px solid var(--main-color-red) ;
     border-radius: 5px;
@@ -132,6 +127,111 @@
 
 .vertical-line {
     border: 1px solid grey;
+}
+
+.customer-table > thead {
+    background-color: var(--main-bg);
+    color: black;
+    height: 60px;
+    text-transform: capitalize;
+}
+
+.customer-table,
+.customer-table th,
+.customer-table td {
+    border-collapse: collapse;
+}
+
+.customer-table > thead,
+.customer-table > tbody {
+    border: solid 2px rgb(225, 225, 225);
+}
+
+.customer-table th,
+.customer-table td {
+    border: solid 1px rgb(225, 225, 225);
+}
+
+.head-select {
+    width: 4%;
+    max-width: 4%;
+}
+
+.head-status {
+    width: 7%;
+    max-width: 7%;
+}
+
+.head-code {
+    width: 10%;
+    max-width: 10%;
+}
+
+.head-name {
+    width: 30%;
+    max-width: 30%;
+}
+
+.head-email {
+    width: 25%;
+    max-width: 25%;
+}
+
+.head-tel {
+    width: 15%;
+    max-width: 15%;
+}
+
+.head-edit {
+    width: 9%;
+    max-width: 9%;
+}
+
+.row > td {
+    padding: 10px;
+}
+
+.row.even {
+    background-color: var(--second-bg);
+}
+
+.row.add {
+    background-color: inherit;
+}
+
+.body-select,
+.body-status,
+.body-tel,
+.body-edit {
+    text-align: center;
+}
+
+.body-status.active > span {
+    background-color: var(--main-color-green);
+    color: white;
+    border-radius: 30px;
+    padding: 0 10px;
+}
+
+.body-status.inactive > span {
+    background-color: var(--main-color-yellow);
+    color: white;
+    border-radius: 30px;
+    padding: 0 10px;
+}
+
+.body-edit > button {
+    border: 2px solid var(--main-color-blue);
+    border-radius: 10px;
+    background-color: inherit;
+    color: var(--main-color-blue);
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.body-edit > button:active {
+    background-color: var(--main-color-blue);
+    color: white;
 }
 
 .table-pagination {
