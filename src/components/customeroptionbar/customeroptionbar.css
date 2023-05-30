@@ -13,45 +13,6 @@
     text-transform: capitalize;
 }
 
-.button-group {
-    display: flex;
-    column-gap: 5px;
-}
-
-.button-set-status {
-    border: 2px solid var(--main-color-blue) ;
-    border-radius: 5px;
-    color: white;
-    background-color: var(--main-color-blue);
-    cursor: pointer;
-    font-size: 16px;
-    padding: 3px 7px;
-}
-
-.button-set-status:hover {
-    background-color: var(--second-color-blue);
-    border-color: var(--second-color-blue);
-}
-
-.button-delete {
-    border: 2px solid var(--main-color-red) ;
-    border-radius: 5px;
-    color: var(--main-color-red);
-    background-color: inherit;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 3px 7px;
-}
-
-.button-delete:hover {
-    background-color: var(--main-color-red);
-    color: white;
-}
-
-.vertical-line {
-    border: 1px solid grey;
-}
-
 .button-add {
     border: 2px solid var(--main-color-green) ;
     border-radius: 5px;

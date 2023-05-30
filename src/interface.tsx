@@ -11,3 +11,8 @@ export interface ActionUpdateCustomer {
   data: CustomerData,
   index: number
 }
+
+export interface ActionMultipleUpdateCustomer {
+  status: string,
+  arrIndex: number[]
+}

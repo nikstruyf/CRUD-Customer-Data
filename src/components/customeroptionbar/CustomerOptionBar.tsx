@@ -7,27 +7,6 @@ export default function CustomerOptionBar() {
 
   return (
     <div className="option-bar">
-      <div className="button-group">
-        <button
-          type="button"
-          className="button-set-status"
-        >
-          active
-        </button>
-        <button
-          type="button"
-          className="button-set-status"
-        >
-          inactive
-        </button>
-        <span className="vertical-line" />
-        <button
-          type="button"
-          className="button-delete"
-        >
-          delete
-        </button>
-      </div>
       <div>
         <button
           type="button"
