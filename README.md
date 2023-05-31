@@ -10,9 +10,11 @@ Then you can enjoy the CRUD-Customer-Data.
 
 ## Getting Start!
 
-After clone this project, install react-script.
+After clone this project, install yarn.
 
-### `yarn add react-scripts --save`
+### `npm install --global yarn`
+and
+### `yarn`
 
 Then in the project directory, you can run:
 
