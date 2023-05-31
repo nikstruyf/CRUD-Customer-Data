@@ -14,6 +14,7 @@ export default function CustomerTable() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [customerData, setCustomerData] = useState<CustomerData[]>(data);
   const [filterCode, setFilterCode] = useState<string>('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [selectedIndex, setSelectedIndex] = useState<number[]>([])
@@ -54,6 +55,17 @@ export default function CustomerTable() {
     setIsDelete(false);
     dispatch(resetConfirm());
   }, [confirm.status]);
+
+  useEffect(() => {
+    setCustomerData(data
+      .filter((el: CustomerData) => el.code.includes(filterCode))
+      .filter(
+        (el: CustomerData) => filterStatus === 'all'
+          ? el
+          : el.status === filterStatus
+      )
+    );
+  }, [filterCode, filterStatus])
 
   return (
     <div className="table-container">
@@ -180,7 +192,7 @@ export default function CustomerTable() {
           </thead>
           <tbody>
             {
-              data.filter((el: CustomerData) => el.code.includes(filterCode))
+              customerData.filter((el: CustomerData) => el.code.includes(filterCode))
                 .filter(
                   (el: CustomerData) => filterStatus === 'all'
                     ? el
@@ -247,7 +259,7 @@ export default function CustomerTable() {
       </div>
       <div className="table-pagination">
         <Pagination
-          count={Math.ceil(data.length / 10)}
+          count={Math.ceil(customerData.length / 10)}
           page={page}
           onChange={pageChange}
         />
