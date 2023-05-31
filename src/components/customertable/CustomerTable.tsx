@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './customertable.css';
 import { useSelector, useDispatch } from "react-redux";
 import { customerArrayData } from "../../reducers/customer";
@@ -6,10 +6,11 @@ import { CustomerData } from "../../interface";
 import { useNavigate } from "react-router-dom";
 import { multipleUpdateCustomer, multipleDeleteCustomer } from "../../reducers/customer";
 import { Pagination } from "@mui/material";
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { confirmState, askConfirm, resetConfirm } from "../../reducers/confirmstate";
 
 export default function CustomerTable() {
   const data = useSelector(customerArrayData);
+  const confirm = useSelector(confirmState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,6 +18,7 @@ export default function CustomerTable() {
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [selectedIndex, setSelectedIndex] = useState<number[]>([])
 
+  const [isDelete, setIsDelete] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
 
   const pageChange = (e: any, p: any) => {
@@ -31,10 +33,27 @@ export default function CustomerTable() {
     }));
   }
 
+  function AskConfirmBeforeAction() {
+    dispatch(askConfirm({
+      message: 'comfirm delete?',
+      status: '',
+      display: true
+    }));
+  }
+
   function ActionDelete() {
     selectedIndex.sort().reverse();
     dispatch(multipleDeleteCustomer(selectedIndex));
   }
+
+  useEffect(() => {
+    if (confirm.status === 'confirm' && isDelete) {
+      ActionDelete();
+      setSelectedIndex([]);
+    }
+    setIsDelete(false);
+    dispatch(resetConfirm());
+  }, [confirm.status]);
 
   return (
     <div className="table-container">
@@ -127,9 +146,11 @@ export default function CustomerTable() {
           <button
             type="button"
             className="button-delete"
-            onClick={() => { ActionDelete(); }}
+            onClick={() => {
+              AskConfirmBeforeAction();
+              setIsDelete(true);
+            }}
           >
-            {/* <DeleteOutlineIcon sx={{ fontSize: 20 }} /> */}
             delete
           </button>
         </div>
@@ -164,58 +185,61 @@ export default function CustomerTable() {
               ? el
               : el.status === filterStatus
             )
-            .map((data: CustomerData, index: number) => (
-              <tr
-                className={`row ${index%2 === 0 ? 'even' : 'odd'}`}
-                key={data.id}
-              >
-                <td className="body-select">
-                  <input
-                    type="checkbox"
-                    checked={selectedIndex.includes(index)}
-                    onChange={(e) => {
-                      const { target } = e;
-                      if((target as HTMLInputElement).checked) {
-                        setSelectedIndex([
-                          ...selectedIndex,
-                          index
-                        ]);
-                      } else {
-                        setSelectedIndex([
-                          ...selectedIndex.slice(
-                            0, selectedIndex.indexOf(index)
-                          ),
-                          ...selectedIndex.slice(selectedIndex.indexOf(index) + 1)
-                        ])
-                      }
-                    }}
-                  />
-                </td>
-                <td className={`body-status ${data.status}`}>
-                  <span>{data.status}</span>
-                </td>
-                <td className="body-code">
-                  {data.code}
-                </td>
-                <td className="body-name">
-                  {data.name}
-                </td>
-                <td className="body-email">
-                  {data.email}
-                </td>
-                <td className="body-tel">
-                  {data.tel}
-                </td>
-                <td className="body-edit">
-                  <button
-                    type="button"
-                    onClick={() => { navigate(`/customer/manage?form-type=update&id=${data.id}`); }}
+            .map((data: CustomerData, index: number) => {
+              if (index >= page * 10 - 10 && index < page * 10)
+                return (
+                  <tr
+                    className={`row ${index % 2 === 0 ? 'even' : 'odd'}`}
+                    key={data.id}
                   >
-                    update
-                  </button>
-                </td>
-              </tr>
-            ))
+                    <td className="body-select">
+                      <input
+                        type="checkbox"
+                        checked={selectedIndex.includes(index)}
+                        onChange={(e) => {
+                          const { target } = e;
+                          if ((target as HTMLInputElement).checked) {
+                            setSelectedIndex([
+                              ...selectedIndex,
+                              index
+                            ]);
+                          } else {
+                            setSelectedIndex([
+                              ...selectedIndex.slice(
+                                0, selectedIndex.indexOf(index)
+                              ),
+                              ...selectedIndex.slice(selectedIndex.indexOf(index) + 1)
+                            ])
+                          }
+                        }}
+                      />
+                    </td>
+                    <td className={`body-status ${data.status}`}>
+                      <span>{data.status}</span>
+                    </td>
+                    <td className="body-code">
+                      {data.code}
+                    </td>
+                    <td className="body-name">
+                      {data.name}
+                    </td>
+                    <td className="body-email">
+                      {data.email}
+                    </td>
+                    <td className="body-tel">
+                      {data.tel}
+                    </td>
+                    <td className="body-edit">
+                      <button
+                        type="button"
+                        onClick={() => { navigate(`/customer/manage?form-type=update&id=${data.id}`); }}
+                      >
+                        update
+                      </button>
+                    </td>
+                  </tr>
+                )
+            })
           }
         </tbody>
       </table>

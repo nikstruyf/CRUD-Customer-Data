@@ -222,7 +222,7 @@
 
 .body-edit > button {
     border: 2px solid var(--main-color-blue);
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: inherit;
     color: var(--main-color-blue);
     text-transform: capitalize;

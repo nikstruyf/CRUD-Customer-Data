@@ -13,7 +13,7 @@ export default function CustomerOptionBar() {
           className="button-add"
           onClick={() => { navigate('/customer/manage?form-type=insert'); }}
         >
-          add
+          <span>insert customer</span>
         </button>
       </div>
     </div>

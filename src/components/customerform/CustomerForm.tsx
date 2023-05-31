@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams  } from 'react-router-dom';
 import { CustomerData } from "../../interface";
 import { useSelector, useDispatch } from "react-redux";
 import { customerArrayData, insertCustomer, updateCustomer, deleteCustomer } from "../../reducers/customer";
+import { confirmState, askConfirm, resetConfirm } from "../../reducers/confirmstate";
 
 export default function CustomerForm() {
   const navigate = useNavigate();
@@ -14,14 +15,57 @@ export default function CustomerForm() {
   const [email, setEmail] = useState<string>('');
   const [tel, setTel] = useState<string>('');
 
+  const [isDelete, setIsDelete] = useState<boolean>(false);
+  const [validMessage, setValidMessage] = useState<boolean>(false);
+
+  const confirm = useSelector(confirmState);
+
   const data = useSelector(customerArrayData);
   let index = -1;
   if (searchParams.get('form-type') === 'update') {
     index = data.findIndex((data: CustomerData) => data.id === searchParams.get('id'));
   }
 
-  const insert = (e: any) => {
+  function checkFillAll() {
+    if (
+      code === ''
+      || name === ''
+      || email === ''
+      || tel === ''
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  const formSubmit = (e: any) => {
     e.preventDefault();
+    if (checkFillAll()) {
+      setValidMessage(false);
+      dispatch(askConfirm({
+        message: searchParams.get('form-type') === 'update'
+          ? 'continue update?'
+          : 'continue insert?',
+        status: '',
+        display: true
+      }));
+    } else {
+      setValidMessage(true);
+    }
+  } 
+
+  const formReset = (e: any) => {
+    e.preventDefault();
+    setIsDelete(true);
+    dispatch(askConfirm({
+      message: 'comfirm delete?',
+      status: '',
+      display: true
+    }));
+  }
+
+  function insert() {
     dispatch(insertCustomer({
       id: code+tel.slice(-4),
       code,
@@ -37,9 +81,7 @@ export default function CustomerForm() {
     navigate('/customer');
   }
 
-  const update = (e: any) => {
-    e.preventDefault();
-    console.log(index);
+  function update() {
     dispatch(updateCustomer({
       data: {
       id: code+tel.slice(-4),
@@ -58,8 +100,7 @@ export default function CustomerForm() {
     navigate('/customer');
   }
 
-  const deleteCus = (e: any) => {
-    e.preventDefault();
+  function deleteCus() {
     dispatch(deleteCustomer(index));
     setCode('');
     setName('');
@@ -77,10 +118,24 @@ export default function CustomerForm() {
     }
   }, [])
 
+  useEffect(() => {
+    if (confirm.status === 'confirm') {
+      if (searchParams.get('form-type') === 'update' && !isDelete) {
+        update();
+      } else if (searchParams.get('form-type') === 'insert' && !isDelete) {
+        insert();
+      } else {
+        deleteCus();
+        setIsDelete(false);
+      }
+    }
+    dispatch(resetConfirm());
+  }, [confirm.status]);
+
   return (
     <form
-      onSubmit={searchParams.get('form-type') === 'update' ? update : insert}
-      onReset={deleteCus}
+      onSubmit={formSubmit}
+      onReset={formReset}
     >
       <div className="form-header">
         insert customer information
@@ -120,6 +175,12 @@ export default function CustomerForm() {
           value={tel || ''}
           onChange={(e) => { setTel(e.target.value) }}
         />
+      </div>
+      <div className="label">
+        <span />
+        <div className={`valid-message ${validMessage ? '' : 'hide'}`}>
+          please, fill all customer information
+        </div>
       </div>
       <div className="label submit">
         <span />

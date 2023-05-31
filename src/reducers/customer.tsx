@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CustomerData, ActionUpdateCustomer, ActionMultipleUpdateCustomer } from "../interface";
 
+import sampleData from '../sampledata.json';
+
 interface ActionInsertType {
     type: string,
     payload: CustomerData
@@ -25,29 +27,6 @@ interface ActionMultipleDeleteType {
   type: string,
   payload: number[]
 }
-
-const sampleData = [{
-  id: 'nik27252725',
-  code: 'nik2725',
-  name: 'nik',
-  email: 'nikkun@gmail.com',
-  tel: '0933912725',
-  status: 'inactive'
-},{
-  id: 'nik73607360',
-  code: 'kin7360',
-  name: 'kin',
-  email: 'memoryo@gmail.com',
-  tel: '0933277360',
-  status: 'inactive'
-},{
-  id: 'nalin27252725',
-  code: 'nalin2725',
-  name: 'nalin',
-  email: 'nikkunraho@gmail.com',
-  tel: '0933912725',
-  status: 'inactive'
-},]
 
 export const customerSlice = createSlice({
   name: 'customer',
