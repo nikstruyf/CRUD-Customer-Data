@@ -155,94 +155,96 @@ export default function CustomerTable() {
           </button>
         </div>
       </div>
-      <table className="customer-table">
-        <thead>
-          <tr>
-            <th className="head-select" />
-            <th className="head-status">
-              status
-            </th>
-            <th className="head-code">
-              code
-            </th>
-            <th className="head-name">
-              name
-            </th>
-            <th className="head-email">
-              email
-            </th>
-            <th className="head-tel">
-              telephone number
-            </th>
-            <th className="head-edit" />
-          </tr>
-        </thead>
-        <tbody>
-          {
-            data.filter((el: CustomerData) => el.code.includes(filterCode))
-            .filter(
-              (el: CustomerData) => filterStatus === 'all'
-              ? el
-              : el.status === filterStatus
-            )
-            .map((data: CustomerData, index: number) => {
-              if (index >= page * 10 - 10 && index < page * 10)
-                return (
-                  <tr
-                    className={`row ${index % 2 === 0 ? 'even' : 'odd'}`}
-                    key={data.id}
-                  >
-                    <td className="body-select">
-                      <input
-                        type="checkbox"
-                        checked={selectedIndex.includes(index)}
-                        onChange={(e) => {
-                          const { target } = e;
-                          if ((target as HTMLInputElement).checked) {
-                            setSelectedIndex([
-                              ...selectedIndex,
-                              index
-                            ]);
-                          } else {
-                            setSelectedIndex([
-                              ...selectedIndex.slice(
-                                0, selectedIndex.indexOf(index)
-                              ),
-                              ...selectedIndex.slice(selectedIndex.indexOf(index) + 1)
-                            ])
-                          }
-                        }}
-                      />
-                    </td>
-                    <td className={`body-status ${data.status}`}>
-                      <span>{data.status}</span>
-                    </td>
-                    <td className="body-code">
-                      {data.code}
-                    </td>
-                    <td className="body-name">
-                      {data.name}
-                    </td>
-                    <td className="body-email">
-                      {data.email}
-                    </td>
-                    <td className="body-tel">
-                      {data.tel}
-                    </td>
-                    <td className="body-edit">
-                      <button
-                        type="button"
-                        onClick={() => { navigate(`/customer/manage?form-type=update&id=${data.id}`); }}
-                      >
-                        update
-                      </button>
-                    </td>
-                  </tr>
+      <div className="table-content">
+        <table className="customer-table">
+          <thead>
+            <tr>
+              <th className="head-select" />
+              <th className="head-status">
+                status
+              </th>
+              <th className="head-code">
+                code
+              </th>
+              <th className="head-name">
+                name
+              </th>
+              <th className="head-email">
+                email
+              </th>
+              <th className="head-tel">
+                telephone number
+              </th>
+              <th className="head-edit" />
+            </tr>
+          </thead>
+          <tbody>
+            {
+              data.filter((el: CustomerData) => el.code.includes(filterCode))
+                .filter(
+                  (el: CustomerData) => filterStatus === 'all'
+                    ? el
+                    : el.status === filterStatus
                 )
-            })
-          }
-        </tbody>
-      </table>
+                .map((data: CustomerData, index: number) => {
+                  if (index >= page * 10 - 10 && index < page * 10)
+                    return (
+                      <tr
+                        className={`row ${index % 2 === 0 ? 'even' : 'odd'}`}
+                        key={data.id}
+                      >
+                        <td className="body-select">
+                          <input
+                            type="checkbox"
+                            checked={selectedIndex.includes(index)}
+                            onChange={(e) => {
+                              const { target } = e;
+                              if ((target as HTMLInputElement).checked) {
+                                setSelectedIndex([
+                                  ...selectedIndex,
+                                  index
+                                ]);
+                              } else {
+                                setSelectedIndex([
+                                  ...selectedIndex.slice(
+                                    0, selectedIndex.indexOf(index)
+                                  ),
+                                  ...selectedIndex.slice(selectedIndex.indexOf(index) + 1)
+                                ])
+                              }
+                            }}
+                          />
+                        </td>
+                        <td className={`body-status ${data.status}`}>
+                          <span>{data.status}</span>
+                        </td>
+                        <td className="body-code">
+                          {data.code}
+                        </td>
+                        <td className="body-name">
+                          {data.name}
+                        </td>
+                        <td className="body-email">
+                          {data.email}
+                        </td>
+                        <td className="body-tel">
+                          {data.tel}
+                        </td>
+                        <td className="body-edit">
+                          <button
+                            type="button"
+                            onClick={() => { navigate(`/customer/manage?form-type=update&id=${data.id}`); }}
+                          >
+                            update
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                })
+            }
+          </tbody>
+        </table>
+      </div>
       <div className="table-pagination">
         <Pagination
           count={Math.ceil(data.length / 10)}

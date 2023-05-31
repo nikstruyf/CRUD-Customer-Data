@@ -26,6 +26,10 @@
     margin-left: 5px;
 }
 
+.inputbox.login {
+    width: 200px;
+}
+
 .login-button {
     padding: 5px 30px;
     font-size: 16px;

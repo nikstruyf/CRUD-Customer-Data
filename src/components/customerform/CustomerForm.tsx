@@ -15,7 +15,7 @@ export default function CustomerForm() {
   const [email, setEmail] = useState<string>('');
   const [tel, setTel] = useState<string>('');
 
-  const [isDelete, setIsDelete] = useState<boolean>(false);
+  const [action, setAtcion] = useState<string>('');
   const [validMessage, setValidMessage] = useState<boolean>(false);
 
   const confirm = useSelector(confirmState);
@@ -42,6 +42,7 @@ export default function CustomerForm() {
   const formSubmit = (e: any) => {
     e.preventDefault();
     if (checkFillAll()) {
+      setAtcion('add');
       setValidMessage(false);
       dispatch(askConfirm({
         message: searchParams.get('form-type') === 'update'
@@ -57,7 +58,7 @@ export default function CustomerForm() {
 
   const formReset = (e: any) => {
     e.preventDefault();
-    setIsDelete(true);
+    setAtcion('delete');
     dispatch(askConfirm({
       message: 'comfirm delete?',
       status: '',
@@ -120,14 +121,14 @@ export default function CustomerForm() {
 
   useEffect(() => {
     if (confirm.status === 'confirm') {
-      if (searchParams.get('form-type') === 'update' && !isDelete) {
+      if (searchParams.get('form-type') === 'update' && action === 'add') {
         update();
-      } else if (searchParams.get('form-type') === 'insert' && !isDelete) {
+      } else if (searchParams.get('form-type') === 'insert' && action === 'add') {
         insert();
-      } else {
+      } else if (action === 'delete') {
         deleteCus();
-        setIsDelete(false);
       }
+      setAtcion('');
     }
     dispatch(resetConfirm());
   }, [confirm.status]);

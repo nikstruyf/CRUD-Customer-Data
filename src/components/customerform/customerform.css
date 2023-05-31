@@ -80,3 +80,22 @@
 .delete-button:active {
     transform: translateY(1px);
 }
+
+@media screen and (max-width: 520px) {
+    .label {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .label > span {
+        flex-basis: 0;
+    }
+
+    .inputbox {
+        width: calc(100% - 10px);
+    }
+
+    .label.submit {
+        align-items: center;
+    }
+}

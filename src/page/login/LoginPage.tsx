@@ -23,7 +23,7 @@ export default function LoginPage() {
           <div className="login-label">
             <span>username</span>
             <input
-              className="inputbox"
+              className="inputbox login"
               type="text"
               placeholder="enter username"
               onChange={(e) => { setUsername(e.target.value); }}

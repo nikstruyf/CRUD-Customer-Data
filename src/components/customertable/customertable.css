@@ -129,6 +129,18 @@
     border: 1px solid grey;
 }
 
+.table-content {
+    overflow-x: scroll;
+}
+
+.table-content::-webkit-scrollbar {
+    display: none;
+}
+
+.customer-table {
+    width: 100%;
+}
+
 .customer-table > thead {
     background-color: var(--main-bg);
     color: black;
@@ -238,4 +250,19 @@
     display: flex;
     justify-content: end;
     margin: 20px 10px 10px 10px;
+}
+
+@media screen and (max-width: 900px) {
+    .table-option {
+        flex-direction: column;
+        row-gap: 5px;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .filter-group {
+        flex-direction: column;
+        row-gap: 5px;
+    }
 }
