@@ -65,7 +65,7 @@ export default function CustomerTable() {
           : el.status === filterStatus
       )
     );
-  }, [filterCode, filterStatus])
+  }, [filterCode, filterStatus, data.length])
 
   return (
     <div className="table-container">
@@ -192,7 +192,7 @@ export default function CustomerTable() {
           </thead>
           <tbody>
             {
-              customerData.filter((el: CustomerData) => el.code.includes(filterCode))
+              data.filter((el: CustomerData) => el.code.includes(filterCode))
                 .filter(
                   (el: CustomerData) => filterStatus === 'all'
                     ? el
