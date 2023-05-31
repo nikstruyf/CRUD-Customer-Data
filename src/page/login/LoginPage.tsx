@@ -12,8 +12,10 @@ export default function LoginPage() {
 
   const login = (e: any) => {
     e.preventDefault();
-    dispatch(doLogin(username || ''));
-    navigate('/customer');
+    if (username !== '') {
+      dispatch(doLogin(username));
+      navigate('/customer');
+    }
   }
 
   return (
